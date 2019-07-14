@@ -1,3 +1,7 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/diviei/yara-editor)
+
+[![npm version](https://badge.fury.io/js/yara-editor.svg)](https://badge.fury.io/js/yara-editor)
+
 # Install
 ```
 git clone https://github.com/Diviei/yara-editor.git
