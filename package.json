@@ -1,6 +1,6 @@
 {
   "name": "yara-editor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A lightweight Yara editor vanilla web component",
   "main": "yara-editor.js",
   "directories": {},
