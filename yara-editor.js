@@ -252,6 +252,10 @@ export class YaraEditor extends HTMLElement {
       return '';
     }
 
+    code = code.replace(/&/g,'&amp;').
+        replace(/</g,'&lt;').
+        replace(/>/g,'&gt;');
+
     // Keywords
     keywords.forEach((keyword) => {
       code = code.replace(new RegExp(`\\b${keyword}\\b`, 'g'),
