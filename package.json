@@ -1,0 +1,15 @@
+{
+  "name": "yara-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "yara-editor.js",
+  "directories": {},
+  "scripts": {
+    "test": "echo \"Nope yet\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "local-web-server": "^3.0.4"
+  }
+}
