@@ -7,6 +7,7 @@ template.innerHTML = `<style>
     :host {
       display: flex;
       position: relative;
+      overflow-y: auto;
       background: var(--ye-background-color);
 
       --ye-font-family: monospace;
@@ -41,7 +42,6 @@ template.innerHTML = `<style>
       padding-top: var(--ye-padding);
       width: var(--ye-line-numbers-width);
       user-select: none;
-
       @apply --ye-line-numers;
     }
     .line-numbers > div {
@@ -52,19 +52,17 @@ template.innerHTML = `<style>
     #editor {
       flex: 1 1 100%;
       position: absolute;
-      min-height: 100%;
       padding: var(--ye-padding);
       font-family: var(--ye-font-family);
       cursor: text;
       white-space: pre-wrap;
       margin: 0;
-      overflow-y: auto;
       margin-left: var(--ye-line-numbers-width);
       background-color: var(--ye-background-color);
       color: var(--ye-word-color);
     }
     textarea {
-      flex:1;
+      flex: 1;
       position: relative;
       padding: var(--ye-padding);
       font-family: var(--ye-font-family);
@@ -75,7 +73,6 @@ template.innerHTML = `<style>
       color: transparent;
       caret-color: var(--ye-word-color);
       outline: none;
-      overflow-y: auto;
       resize: none;
     }
 
@@ -125,6 +122,7 @@ export class YaraEditor extends HTMLElement {
 
     this.editor = null;
     this.textarea = null;
+    this.lineNumbers = null;
   }
 
   static get observedAttributes() {
@@ -174,6 +172,7 @@ export class YaraEditor extends HTMLElement {
 
     this.editor = this.shadowRoot.getElementById('editor');
     this.textarea = this.shadowRoot.getElementById('textarea');
+    this.lineNumbers = this.shadowRoot.querySelector('.line-numbers');
 
     this.textarea.value = this.value;
     this.textarea.readOnly = this.readonly;
@@ -181,20 +180,24 @@ export class YaraEditor extends HTMLElement {
     this.textarea.addEventListener('keypress', event => {
       setTimeout(()=> {
         this.editor.innerHTML = this._parseCode(this.textarea.value);
+        this._setElementHeights();
       });
     });
     this.textarea.addEventListener('keyup', event => {
       setTimeout(()=> {
         this.editor.innerHTML = this._parseCode(this.textarea.value);
+        this._setElementHeights();
       });
     });
     this.textarea.addEventListener('keydown', event => {
       setTimeout(()=> {
         this.editor.innerHTML = this._parseCode(this.textarea.value);
+        this._setElementHeights();
       }, 10);
     });
 
     this.editor.innerHTML = this._parseCode(this.textarea.value);
+    this._setElementHeights();
   }
 
   checkValidity() {
@@ -270,12 +273,17 @@ export class YaraEditor extends HTMLElement {
     return code;
   }
 
+  _setElementHeights() {
+    let height = `${this.editor.offsetHeight}px`;
+    this.textarea.style.height = height;
+    this.lineNumbers.style.height = height;
+  }
+
   _writeLineNumbers(code) {
     let lines = code.split('\n');
-    let lineNumbers = this.shadowRoot.querySelector('.line-numbers');
-    lineNumbers.innerHTML = '';
+    this.lineNumbers.innerHTML = '';
     for(let i = 1; i < (lines.length + 1); i++) {
-      lineNumbers.innerHTML += `<div>${i}</div>`;
+      this.lineNumbers.innerHTML += `<div>${i}</div>`;
     }
   }
 }
