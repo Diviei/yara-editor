@@ -10,9 +10,9 @@ template.innerHTML = `<style>
       overflow-y: auto;
       background: var(--ye-background-color);
 
-      --ye-font-family: "Courier New", monospace, Courier;
+      --ye-font-family: monospace, "Courier New",  Courier;
       --ye-font-size: 13px;
-      --ye-line-height: 18px;
+      --ye-line-height: 15px;
 
       --ye-keyword-color: #708;
       --ye-word-color: #000;
