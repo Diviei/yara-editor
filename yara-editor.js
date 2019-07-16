@@ -10,7 +10,9 @@ template.innerHTML = `<style>
       overflow-y: auto;
       background: var(--ye-background-color);
 
-      --ye-font-family: monospace;
+      --ye-font-family: "Courier New", monospace, Courier;
+      --ye-font-size: 13px;
+      --ye-line-height: 18px;
 
       --ye-keyword-color: #708;
       --ye-word-color: #000;
@@ -43,37 +45,42 @@ template.innerHTML = `<style>
       width: var(--ye-line-numbers-width);
       user-select: none;
       @apply --ye-line-numers;
+      font-size: var(--ye-font-size);
     }
     .line-numbers > div {
       padding: 0 3px 0 5px;
       min-width: 20px;
+      height: var(--ye-line-height);
       text-align: right;
     }
     #editor {
       flex: 1 1 100%;
       position: absolute;
       padding: var(--ye-padding);
-      font-family: var(--ye-font-family);
       cursor: text;
       white-space: pre-wrap;
       margin: 0;
       margin-left: var(--ye-line-numbers-width);
       background-color: var(--ye-background-color);
       color: var(--ye-word-color);
+      font-family: var(--ye-font-family);
+      font-size: var(--ye-font-size);
+      line-height: var(--ye-line-height);
     }
     textarea {
       flex: 1;
       position: relative;
       padding: var(--ye-padding);
-      font-family: var(--ye-font-family);
       border: 0;
-      font-size: 13px;
       opacity: 1;
       background: transparent;
       color: transparent;
       caret-color: var(--ye-word-color);
       outline: none;
       resize: none;
+      font-family: var(--ye-font-family);
+      font-size: var(--ye-font-size);
+      line-height: var(--ye-line-height);
     }
 
     .ye-keyword {
