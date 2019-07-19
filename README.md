@@ -1,5 +1,5 @@
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/diviei/yara-editor) [![npm version](https://badge.fury.io/js/yara-editor.svg)](https://badge.fury.io/js/yara-editor)
-[![Dependencies](https://david-dm.org/diviei/yara-editor.svg)]
+![Dependencies](https://david-dm.org/diviei/yara-editor.svg)
 [![Codeship Status for Diviei/yara-editor](https://app.codeship.com/projects/5f9e0b40-8bcb-0137-6530-5e1cc316f3f0/status?branch=master)](https://app.codeship.com/projects/355186)
 
 # Install
