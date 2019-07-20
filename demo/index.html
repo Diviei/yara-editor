@@ -1,62 +1,18 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en-GB">
 <head>
-  <title>Yara Editor</title>
-
-  <script type="module" src="../yara-editor.js"></script>
-
-  <style type="text/css">
+  <meta charset="utf-8">
+  <style>
     body {
-      margin: 0 auto;
-      max-width: 600px;
-    }
-    yara-editor {
-      min-height: 250px;
-      margin-bottom: 20px;
-    }
-
-    yara-editor.monokai {
-      --ye-keyword-color: #F92672;
-      --ye-word-color: #F8F8F2;
-      --ye-string-color: #E6DB74;
-      --ye-comment-color: #75715E;
-      --ye-padding: 10px;
-      --ye-line-numbers-width: 30px;
-      --ye-background-color: #272822;
-      --ye-line-numbers-background-color: #272822;
-      --ye-line-numbers-color: #75715E;
-      --ye-line-numbers-border-color: #75715E;
-      --ye-font-family: monospace;
+      background: #fafafa;
+      max-width: 800px;
+      margin: auto;
     }
   </style>
 </head>
 <body>
+  <div id="demo"></div>
 
-  <h2>Default yara editor</h2>
-  <yara-editor></yara-editor>
-
-  <h2>Read only</h2>
-  <yara-editor readonly="1"></yara-editor>
-
-  <h2>Theming</h2>
-  <yara-editor class="monokai"></yara-editor>
-
-  <script type="text/javascript">
-    document.querySelectorAll('yara-editor').forEach((yaraEditor) => {
-      yaraEditor.setAttribute('value', `/* Comment */
-/*
-  Comment block
-*/
-rule test {
-  meta:
-    author = "test"
-  strings:
-    $a ="test"
-    $b ="test2"
-  condition:
-    any of them
-}`);
-    });
-  </script>
+  <script type="module" src="index.js"></script>
 </body>
 </html>

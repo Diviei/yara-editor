@@ -1,116 +1,111 @@
+import { html, css, LitElement } from 'lit-element';
 import {keywords} from './keywords.js';
 import './tab-textarea.js';
 
-const tagName = 'yara-editor';
-const template = document.createElement('template');
-template.innerHTML = `<style>
-    :host {
-      display: flex;
-      position: relative;
-      overflow-y: auto;
-      background: var(--ye-background-color);
+export default class YaraEditor extends LitElement {
+  static get styles() {
+    return css`
+      :host {
+        display: flex;
+        position: relative;
+        overflow-y: auto;
+        background: var(--ye-background-color);
+        --ye-font-family: monospace, "Courier New",  Courier;
+        --ye-font-size: 13px;
+        --ye-line-height: 15px;
+        --ye-keyword-color: #708;
+        --ye-word-color: #000;
+        --ye-string-color: #a11;
+        --ye-comment-color: #a50;
+        --ye-background-color: #FFF;
+        --ye-padding: 10px;
+        --ye-line-numbers-background-color: #f7f7f7;
+        --ye-line-numbers-color: #999;
+        --ye-line-numbers-border-color: #ddd;
+        --ye-line-numbers-width: 30px;
+      }
+      *, *:before, *:after {
+        box-sizing: border-box;
+      }
+      #ye-editor {
+        display: flex;
+      }
+      .line-numbers {
+        color: var(--ye-line-numbers-color);
+        font-family: var(--ye-font-family);
+        border-right: 1px solid var(--ye-line-numbers-border-color);
+        background-color: var(--ye-line-numbers-background-color);
+        white-space: nowrap;
+        padding-top: var(--ye-padding);
+        width: var(--ye-line-numbers-width);
+        user-select: none;
+        @apply --ye-line-numers;
+        font-size: var(--ye-font-size);
+      }
+      .line-numbers > div {
+        padding: 0 3px 0 5px;
+        min-width: 20px;
+        height: var(--ye-line-height);
+        text-align: right;
+      }
+      #editor {
+        flex: 1 1 100%;
+        position: absolute;
+        padding: var(--ye-padding);
+        cursor: text;
+        white-space: pre-wrap;
+        margin: 0;
+        margin-left: var(--ye-line-numbers-width);
+        background-color: var(--ye-background-color);
+        color: var(--ye-word-color);
+        font-family: var(--ye-font-family);
+        font-size: var(--ye-font-size);
+        line-height: var(--ye-line-height);
+      }
+      textarea {
+        flex: 1;
+        position: relative;
+        padding: var(--ye-padding);
+        border: 0;
+        opacity: 1;
+        background: transparent;
+        color: transparent;
+        caret-color: var(--ye-word-color);
+        outline: none;
+        resize: none;
+        font-family: var(--ye-font-family);
+        font-size: var(--ye-font-size);
+        line-height: var(--ye-line-height);
+      }
+      .ye-keyword {
+        color: var(--ye-keyword-color);
+        @apply --ye-keyword;
+      }
+      .ye-word {
+        color: var(--ye-word-color);
+        @apply --ye-color;
+      }
+      .ye-string {
+        color: var(--ye-string-color);
+        @apply --ye-string;
+      }
+      .ye-comment {
+        color: var(--ye-comment-color) !important;
+        @apply --ye-comment;
+      }
+    `;
+  }
 
-      --ye-font-family: monospace, "Courier New",  Courier;
-      --ye-font-size: 13px;
-      --ye-line-height: 15px;
-
-      --ye-keyword-color: #708;
-      --ye-word-color: #000;
-      --ye-string-color: #a11;
-      --ye-comment-color: #a50;
-      --ye-background-color: #FFF;
-
-      --ye-padding: 10px;
-
-      --ye-line-numbers-background-color: #f7f7f7;
-      --ye-line-numbers-color: #999;
-      --ye-line-numbers-border-color: #ddd;
-      --ye-line-numbers-width: 30px;
+  static get properties() {
+    return {
+      value: {
+        type: String,
+      },
     }
-
-    *, *:before, *:after {
-      box-sizing: border-box;
-    }
-
-    #ye-editor {
-      display: flex;
-    }
-    .line-numbers {
-      color: var(--ye-line-numbers-color);
-      font-family: var(--ye-font-family);
-      border-right: 1px solid var(--ye-line-numbers-border-color);
-      background-color: var(--ye-line-numbers-background-color);
-      white-space: nowrap;
-      padding-top: var(--ye-padding);
-      width: var(--ye-line-numbers-width);
-      user-select: none;
-      @apply --ye-line-numers;
-      font-size: var(--ye-font-size);
-    }
-    .line-numbers > div {
-      padding: 0 3px 0 5px;
-      min-width: 20px;
-      height: var(--ye-line-height);
-      text-align: right;
-    }
-    #editor {
-      flex: 1 1 100%;
-      position: absolute;
-      padding: var(--ye-padding);
-      cursor: text;
-      white-space: pre-wrap;
-      margin: 0;
-      margin-left: var(--ye-line-numbers-width);
-      background-color: var(--ye-background-color);
-      color: var(--ye-word-color);
-      font-family: var(--ye-font-family);
-      font-size: var(--ye-font-size);
-      line-height: var(--ye-line-height);
-    }
-    textarea {
-      flex: 1;
-      position: relative;
-      padding: var(--ye-padding);
-      border: 0;
-      opacity: 1;
-      background: transparent;
-      color: transparent;
-      caret-color: var(--ye-word-color);
-      outline: none;
-      resize: none;
-      font-family: var(--ye-font-family);
-      font-size: var(--ye-font-size);
-      line-height: var(--ye-line-height);
-    }
-
-    .ye-keyword {
-      color: var(--ye-keyword-color);
-      @apply --ye-keyword;
-    }
-    .ye-word {
-      color: var(--ye-word-color);
-      @apply --ye-color;
-    }
-    .ye-string {
-      color: var(--ye-string-color);
-      @apply --ye-string;
-    }
-    .ye-comment {
-      color: var(--ye-comment-color) !important;
-      @apply --ye-comment;
-    }
-    </style>
-    <div class="line-numbers"></div>
-    <pre id="editor"></pre>
-    <textarea id="textarea" spellcheck="false"><slot></slot></textarea>`;
-
-window.ShadyCSS && window.ShadyCSS.prepareTemplate(template, tagName);
-
-export class YaraEditor extends HTMLElement {
+  }
 
   constructor() {
     super();
-
     this._keywords = keywords;
     this._regexReplaces = [
       { // Strings
@@ -132,25 +127,6 @@ export class YaraEditor extends HTMLElement {
     this.lineNumbers = null;
   }
 
-  static get observedAttributes() {
-    return [
-      'value',
-      'readonly'
-    ];
-  }
-
-  get readonly() {
-    return !!this.getAttribute('readonly') || false;
-  }
-
-  set readonly(newValue) {
-    if (!!newValue) {
-      this.setAttribute('readonly', !!newValue);
-    } else {
-      this.removeAttribute('readonly');
-    }
-  }
-
   get value() {
     return this.getAttribute('value') || '';
   }
@@ -161,42 +137,43 @@ export class YaraEditor extends HTMLElement {
 
   attributeChangedCallback(name, oldVal, newVal) {
     if (name == 'value' && oldVal != newVal && this.textarea && this.editor) {
-      this.textarea.value = this.value;
-      this.editor.innerHTML = this._parseCode(this.textarea.value);
+      this.textarea.value = newVal;
+      this.editor.innerHTML = this._parseCode(newVal);
     } else if (name == 'readonly' && this.textarea) {
       this.textarea.readOnly = newVal;
     }
   }
 
-  connectedCallback() {
-    // Check if shadowRoot exists first
-    if (!this.shadowRoot) {
-      this.attachShadow({mode: 'open'});
-      this.shadowRoot.appendChild(template.content.cloneNode(true));
-    }
+  render() {
+    return html`
+      <div class="line-numbers"></div>
+      <pre id="editor"></pre>
+      <textarea id="textarea" spellcheck="false"><slot></slot></textarea>
+    `;
+  }
 
-    this._initializeTabSupport();
-
+  firstUpdated() {
     this.editor = this.shadowRoot.getElementById('editor');
     this.textarea = this.shadowRoot.getElementById('textarea');
     this.lineNumbers = this.shadowRoot.querySelector('.line-numbers');
+    this._initializeTabSupport();
 
-    this.textarea.value = this.value;
+    this.textarea.value = this.value || '';
     this.textarea.readOnly = this.readonly;
 
-    this.textarea.addEventListener('keypress', event => {
+    this.textarea.addEventListener('keypress', () => {
       setTimeout(()=> {
         this.editor.innerHTML = this._parseCode(this.textarea.value);
         this._setElementHeights();
       });
     });
-    this.textarea.addEventListener('keyup', event => {
+    this.textarea.addEventListener('keyup', () => {
       setTimeout(()=> {
         this.editor.innerHTML = this._parseCode(this.textarea.value);
         this._setElementHeights();
       });
     });
-    this.textarea.addEventListener('keydown', event => {
+    this.textarea.addEventListener('keydown', () => {
       setTimeout(()=> {
         this.editor.innerHTML = this._parseCode(this.textarea.value);
         this._setElementHeights();
@@ -209,6 +186,11 @@ export class YaraEditor extends HTMLElement {
 
   checkValidity() {
     // TODO
+  }
+
+  updated() {
+    this.editor.innerHTML = this._parseCode(this.textarea.value);
+    this._setElementHeights();
   }
 
   _initializeTabSupport() {
@@ -255,6 +237,7 @@ export class YaraEditor extends HTMLElement {
   }
 
   _parseCode(code) {
+    this.checkValidity();
     this.value = code;
     this._writeLineNumbers(code);
 
@@ -294,6 +277,3 @@ export class YaraEditor extends HTMLElement {
     }
   }
 }
-
-const register = () => customElements.define(tagName, YaraEditor);
-window.WebComponents ? window.WebComponents.waitFor(register) : register();

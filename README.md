@@ -2,42 +2,40 @@
 ![Dependencies](https://david-dm.org/diviei/yara-editor.svg)
 [![Codeship Status for Diviei/yara-editor](https://app.codeship.com/projects/5f9e0b40-8bcb-0137-6530-5e1cc316f3f0/status?branch=master)](https://app.codeship.com/projects/355186)
 
-# Install
-```
-git clone https://github.com/Diviei/yara-editor.git
-cd yara-editor
-npm i
+# \<yara-editor>
+
+This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
+
+## Installation
+```bash
+npm i yara-editor
 ```
 
-# Usage
+## Usage
 ```html
-<!-- Empty -->
+<script type="module">
+  import 'yara-editor/yara-editor.js';
+</script>
+
 <yara-editor></yara-editor>
 ```
 
-```html
-<yara-editor value="rules here"></yara-editor>
-<!-- or -->
-<yara-editor id="editor"></yara-editor>
-<script>
-let editor = document.querySelector('#editor');
-editor.value = 'rules here';
-</script>
+## Testing using karma (if applied by author)
+```bash
+npm run test
 ```
 
-```html
-<!-- Read only -->
-<yara-editor value="rules here" readonly="1"></yara-editor>
+## Testing using karma via browserstack (if applied by author)
+```bash
+npm run test:bs
 ```
 
-# Contributing
-TBD
-
-## demo
-```
-./node_modules/.bin/ws
-# Open http://127.0.0.1:8000/demo/
+## Demoing using storybook (if applied by author)
+```bash
+npm run storybook
 ```
 
-## Test
-TBD
+## Linting (if applied by author)
+```bash
+npm run lint
+```
