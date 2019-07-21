@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/048441ce79d24e9484a2e8dad2f66b69)](https://app.codacy.com/app/Diviei/yara-editor?utm_source=github.com&utm_medium=referral&utm_content=Diviei/yara-editor&utm_campaign=Badge_Grade_Settings)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/yara-editor) [![npm version](https://badge.fury.io/js/yara-editor.svg)](https://badge.fury.io/js/yara-editor)
 [![Dependencies](https://david-dm.org/diviei/yara-editor.svg)](https://david-dm.org/diviei/yara-editor)
 [![Codeship Status for Diviei/yara-editor](https://img.shields.io/codeship/5f9e0b40-8bcb-0137-6530-5e1cc316f3f0.svg)](https://app.codeship.com/projects/355186)
