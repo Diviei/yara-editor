@@ -196,15 +196,15 @@ export default class YaraEditor extends LitElement {
   _initializeTabSupport() {
     const textarea = this.shadowRoot.querySelector('textarea');
     let newCaretPosition;
-    textarea.addEventListener('keydown', (event) => {
+    textarea.addEventListener('keydown', event => {
       // support tab on textarea
       if (event.keyCode === 9) {
         // tab was pressed
         newCaretPosition = textarea.getCaretPosition() + '    '.length;
-        textarea.value =
-          `${textarea.value.substring(0, textarea.getCaretPosition())
-          }    ${
-          textarea.value.substring(textarea.getCaretPosition(), textarea.value.length)}`;
+        textarea.value = `${textarea.value.substring(
+          0,
+          textarea.getCaretPosition(),
+        )}    ${textarea.value.substring(textarea.getCaretPosition(), textarea.value.length)}`;
         textarea.setCaretPosition(newCaretPosition);
         return false;
       }
@@ -259,14 +259,16 @@ export default class YaraEditor extends LitElement {
       return '';
     }
 
-    code = code
+    let aux = code;
+
+    aux = aux
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
 
     // Keywords
     keywords.forEach(keyword => {
-      code = code.replace(
+      aux = aux.replace(
         new RegExp(`\\b${keyword}\\b`, 'g'),
         `<span class='ye-keyword'>${keyword}</span>`,
       );
@@ -274,10 +276,10 @@ export default class YaraEditor extends LitElement {
 
     // Regexs
     this._regexReplaces.forEach(r => {
-      code = code.replace(r.regex, r.replacer);
+      aux = aux.replace(r.regex, r.replacer);
     });
 
-    return code;
+    return aux;
   }
 
   _setElementHeights() {
@@ -289,6 +291,7 @@ export default class YaraEditor extends LitElement {
   _writeLineNumbers(code) {
     const lines = code.split('\n');
     this.lineNumbers.innerHTML = '';
+    // eslint-disable-next-line no-plusplus
     for (let i = 1; i < lines.length + 1; i++) {
       this.lineNumbers.innerHTML += `<div>${i}</div>`;
     }

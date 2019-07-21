@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /*
   https://css-tricks.com/snippets/javascript/support-tabs-in-textareas/
 */
@@ -14,11 +15,10 @@ HTMLTextAreaElement.prototype.setCaretPosition = function(position) {
 };
 HTMLTextAreaElement.prototype.hasSelection = function() {
   // if the textarea has selection then return true
-  if (this.selectionStart == this.selectionEnd) {
+  if (this.selectionStart === this.selectionEnd) {
     return false;
-  } 
-    return true;
-  
+  }
+  return true;
 };
 HTMLTextAreaElement.prototype.getSelectedText = function() {
   // return the selection text
