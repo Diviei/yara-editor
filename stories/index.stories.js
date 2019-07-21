@@ -13,5 +13,7 @@ rule test {
     $a = "onestring"
 }`;
 
-storiesOf('yara-editor', module)
-  .add('default view', () => `<yara-editor value='${rules}'></yara-editor>`);
+storiesOf('yara-editor', module).add(
+  'default view',
+  () => `<yara-editor value='${rules}'></yara-editor>`,
+);

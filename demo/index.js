@@ -10,7 +10,9 @@ rule test {
     $a = "test"
 }`;
 
-render(html`
-  <yara-editor value="${rules}">
-  </yara-editor>
-`, document.querySelector('#demo'));
+render(
+  html`
+    <yara-editor value="${rules}"> </yara-editor>
+  `,
+  document.querySelector('#demo'),
+);
