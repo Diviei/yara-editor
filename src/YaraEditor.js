@@ -1,5 +1,5 @@
 import { html, css, LitElement } from 'lit-element';
-import {keywords} from './keywords.js';
+import { keywords } from './keywords.js';
 import './tab-textarea.js';
 
 export default class YaraEditor extends LitElement {
@@ -10,21 +10,23 @@ export default class YaraEditor extends LitElement {
         position: relative;
         overflow-y: auto;
         background: var(--ye-background-color);
-        --ye-font-family: monospace, "Courier New",  Courier;
+        --ye-font-family: monospace, 'Courier New', Courier;
         --ye-font-size: 13px;
         --ye-line-height: 15px;
         --ye-keyword-color: #708;
         --ye-word-color: #000;
         --ye-string-color: #a11;
         --ye-comment-color: #a50;
-        --ye-background-color: #FFF;
+        --ye-background-color: #fff;
         --ye-padding: 10px;
         --ye-line-numbers-background-color: #f7f7f7;
         --ye-line-numbers-color: #999;
         --ye-line-numbers-border-color: #ddd;
         --ye-line-numbers-width: 30px;
       }
-      *, *:before, *:after {
+      *,
+      *:before,
+      *:after {
         box-sizing: border-box;
       }
       #ye-editor {
@@ -101,22 +103,24 @@ export default class YaraEditor extends LitElement {
       value: {
         type: String,
       },
-    }
+    };
   }
 
   constructor() {
     super();
     this._keywords = keywords;
     this._regexReplaces = [
-      { // Strings
+      {
+        // Strings
         regex: /"(.*?)"/g,
-        replacer: function(str, p1) {
+        replacer(str, p1) {
           return `<span class="ye-string">"${p1}"</span>`;
         },
       },
-      { // One line comment
+      {
+        // One line comment
         regex: /(\/\*([\s\S]*?)\*\/)/g,
-        replacer: function(str, p1) {
+        replacer(str, p1) {
           return `<span class="ye-comment">${p1}</span>`;
         },
       },
@@ -136,10 +140,10 @@ export default class YaraEditor extends LitElement {
   }
 
   attributeChangedCallback(name, oldVal, newVal) {
-    if (name == 'value' && oldVal != newVal && this.textarea && this.editor) {
+    if (name === 'value' && oldVal !== newVal && this.textarea && this.editor) {
       this.textarea.value = newVal;
       this.editor.innerHTML = this._parseCode(newVal);
-    } else if (name == 'readonly' && this.textarea) {
+    } else if (name === 'readonly' && this.textarea) {
       this.textarea.readOnly = newVal;
     }
   }
@@ -162,19 +166,19 @@ export default class YaraEditor extends LitElement {
     this.textarea.readOnly = this.readonly;
 
     this.textarea.addEventListener('keypress', () => {
-      setTimeout(()=> {
+      setTimeout(() => {
         this.editor.innerHTML = this._parseCode(this.textarea.value);
         this._setElementHeights();
       });
     });
     this.textarea.addEventListener('keyup', () => {
-      setTimeout(()=> {
+      setTimeout(() => {
         this.editor.innerHTML = this._parseCode(this.textarea.value);
         this._setElementHeights();
       });
     });
     this.textarea.addEventListener('keydown', () => {
-      setTimeout(()=> {
+      setTimeout(() => {
         this.editor.innerHTML = this._parseCode(this.textarea.value);
         this._setElementHeights();
       }, 10);
@@ -184,60 +188,70 @@ export default class YaraEditor extends LitElement {
     this._setElementHeights();
   }
 
-  checkValidity() {
-    // TODO
-  }
-
   updated() {
     this.editor.innerHTML = this._parseCode(this.textarea.value);
     this._setElementHeights();
   }
 
   _initializeTabSupport() {
-    let textarea = this.shadowRoot.querySelector('textarea');
+    const textarea = this.shadowRoot.querySelector('textarea');
     let newCaretPosition;
-    textarea.onkeydown = function(event) {
-      //support tab on textarea
-      if (event.keyCode == 9) { //tab was pressed
-        newCaretPosition = textarea.getCaretPosition() + "    ".length;
-        textarea.value = textarea.value.substring(
-            0, textarea.getCaretPosition()) + "    " +
-            textarea.value.substring(textarea.getCaretPosition(),
-            textarea.value.length);
+    textarea.addEventListener('keydown', event => {
+      // support tab on textarea
+      if (event.keyCode === 9) {
+        // tab was pressed
+        newCaretPosition = textarea.getCaretPosition() + '    '.length;
+        textarea.value = `${textarea.value.substring(
+          0,
+          textarea.getCaretPosition(),
+        )}    ${textarea.value.substring(textarea.getCaretPosition(), textarea.value.length)}`;
         textarea.setCaretPosition(newCaretPosition);
         return false;
       }
-      if (event.keyCode == 8) { //backspace
-          if (textarea.value.substring(
-              textarea.getCaretPosition() - 4,
-              textarea.getCaretPosition()) == "    ") { //it's a tab space
-            newCaretPosition = textarea.getCaretPosition() - 3;
-            textarea.value = textarea.value.substring(0,
-                textarea.getCaretPosition() - 3) +
-                textarea.value.substring(
-                    textarea.getCaretPosition(),
-                    textarea.value.length);
-            textarea.setCaretPosition(newCaretPosition);
+      if (event.keyCode === 8) {
+        // backspace
+        if (
+          textarea.value.substring(textarea.getCaretPosition() - 4, textarea.getCaretPosition()) ===
+          '    '
+        ) {
+          // it's a tab space
+          newCaretPosition = textarea.getCaretPosition() - 3;
+          textarea.value =
+            textarea.value.substring(0, textarea.getCaretPosition() - 3) +
+            textarea.value.substring(textarea.getCaretPosition(), textarea.value.length);
+          textarea.setCaretPosition(newCaretPosition);
         }
+        return true;
       }
-      if (event.keyCode == 37) { //left arrow
-          if (textarea.value.substring(textarea.getCaretPosition() - 4, textarea.getCaretPosition()) == "    ") { //it's a tab space
-            newCaretPosition = textarea.getCaretPosition() - 3;
-            textarea.setCaretPosition(newCaretPosition);
+      if (event.keyCode === 37) {
+        // left arrow
+        if (
+          textarea.value.substring(textarea.getCaretPosition() - 4, textarea.getCaretPosition()) ===
+          '    '
+        ) {
+          // it's a tab space
+          newCaretPosition = textarea.getCaretPosition() - 3;
+          textarea.setCaretPosition(newCaretPosition);
         }
+        return true;
       }
-      if (event.keyCode == 39) { //right arrow
-          if (textarea.value.substring(textarea.getCaretPosition() + 4,
-              textarea.getCaretPosition()) == "    ") { //it's a tab space
-            newCaretPosition = textarea.getCaretPosition() + 3;
-            textarea.setCaretPosition(newCaretPosition);
+      if (event.keyCode === 39) {
+        // right arrow
+        if (
+          textarea.value.substring(textarea.getCaretPosition() + 4, textarea.getCaretPosition()) ===
+          '    '
+        ) {
+          // it's a tab space
+          newCaretPosition = textarea.getCaretPosition() + 3;
+          textarea.setCaretPosition(newCaretPosition);
         }
+        return true;
       }
-    }
+      return true;
+    });
   }
 
   _parseCode(code) {
-    this.checkValidity();
     this.value = code;
     this._writeLineNumbers(code);
 
@@ -245,34 +259,40 @@ export default class YaraEditor extends LitElement {
       return '';
     }
 
-    code = code.replace(/&/g,'&amp;').
-        replace(/</g,'&lt;').
-        replace(/>/g,'&gt;');
+    let aux = code;
+
+    aux = aux
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
 
     // Keywords
-    keywords.forEach((keyword) => {
-      code = code.replace(new RegExp(`\\b${keyword}\\b`, 'g'),
-        `<span class='ye-keyword'>${keyword}</span>`);
+    keywords.forEach(keyword => {
+      aux = aux.replace(
+        new RegExp(`\\b${keyword}\\b`, 'g'),
+        `<span class='ye-keyword'>${keyword}</span>`,
+      );
     });
 
     // Regexs
-    this._regexReplaces.forEach((r) => {
-      code = code.replace(r.regex, r.replacer);
+    this._regexReplaces.forEach(r => {
+      aux = aux.replace(r.regex, r.replacer);
     });
 
-    return code;
+    return aux;
   }
 
   _setElementHeights() {
-    let height = `${this.editor.offsetHeight}px`;
+    const height = `${this.editor.offsetHeight}px`;
     this.textarea.style.height = height;
     this.lineNumbers.style.height = height;
   }
 
   _writeLineNumbers(code) {
-    let lines = code.split('\n');
+    const lines = code.split('\n');
     this.lineNumbers.innerHTML = '';
-    for(let i = 1; i < (lines.length + 1); i++) {
+    // eslint-disable-next-line no-plusplus
+    for (let i = 1; i < lines.length + 1; i++) {
       this.lineNumbers.innerHTML += `<div>${i}</div>`;
     }
   }

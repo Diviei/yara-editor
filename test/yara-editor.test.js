@@ -52,26 +52,26 @@ describe('<yara-editor>', () => {
 
     // Key events
     [
-      new KeyboardEvent("keydown"),
-      new KeyboardEvent("keyup"),
-      new KeyboardEvent("keypress"),
-    ].forEach((event) => {
+      new KeyboardEvent('keydown'),
+      new KeyboardEvent('keyup'),
+      new KeyboardEvent('keypress'),
+    ].forEach(event => {
       el.textarea.dispatchEvent(event);
     });
 
     // Special keys events
     [
-      new KeyboardEvent("keydown", {keyCode: "9"}),
-      new KeyboardEvent("keydown", {keyCode: "8"}),
-      new KeyboardEvent("keydown", {keyCode: "37"}),
-      new KeyboardEvent("keydown", {keyCode: "39"}),
-    ].forEach((event) => {
+      new KeyboardEvent('keydown', { keyCode: '9' }),
+      new KeyboardEvent('keydown', { keyCode: '8' }),
+      new KeyboardEvent('keydown', { keyCode: '37' }),
+      new KeyboardEvent('keydown', { keyCode: '39' }),
+    ].forEach(event => {
       el.textarea.dispatchEvent(event);
     });
   });
 
   it('textarea custom methods', async () => {
-    const testValue = "test";
+    const testValue = 'test';
     const el = await fixture(html`
       <yara-editor value="${testValue}"></yara-editor>
     `);
