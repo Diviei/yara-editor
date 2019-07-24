@@ -24,6 +24,7 @@ export default class YaraEditor extends LitElement {
         --ye-line-numbers-border-color: #ddd;
         --ye-line-numbers-width: 30px;
       }
+
       *,
       *:before,
       *:after {
@@ -143,6 +144,9 @@ export default class YaraEditor extends LitElement {
     if (name === 'value' && oldVal !== newVal && this.textarea && this.editor) {
       this.textarea.value = newVal;
       this.editor.innerHTML = this._parseCode(newVal);
+      this.dispatchEvent(new CustomEvent('value-changed', {
+        detail: newVal,
+      }));
     } else if (name === 'readonly' && this.textarea) {
       this.textarea.readOnly = newVal;
     }
@@ -284,8 +288,8 @@ export default class YaraEditor extends LitElement {
 
   _setElementHeights() {
     const height = `${this.editor.offsetHeight}px`;
-    this.textarea.style.height = height;
-    this.lineNumbers.style.height = height;
+    this.textarea.style.minHeight = height;
+    this.lineNumbers.style.minHeight = height;
   }
 
   _writeLineNumbers(code) {
