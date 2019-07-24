@@ -29,7 +29,8 @@
     "storybook": "start-storybook -p 9001",
     "storybook:build": "build-storybook -o _site -s storybook-static",
     "start:build": "es-dev-server --app-index dist/index.html --open",
-    "build": "rimraf dist && rollup -c rollup.config.js"
+    "build": "rimraf dist && rollup -c rollup.config.js",
+    "build:gh-pages": "npm run build; cp -R dist/ gh-pages/dist/"
   },
   "dependencies": {
     "lit-element": "^2.0.1",

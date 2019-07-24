@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>YaraEditor</title>
+
+  <script type="module" src="dist/yara-editor.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+    }
+    yara-editor {
+      border: 1px solid #DDD;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <yara-editor></yara-editor>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let yaraEditor = document.querySelector('yara-editor');
+      yaraEditor.value = localStorage.getItem('ruleset') ||
+          '/* Write your rules here */';
+      yaraEditor.addEventListener('value-changed', (event) => {
+        localStorage.setItem('ruleset', event.detail);
+      });
+    });
+  </script>
+</body>
+</html>
