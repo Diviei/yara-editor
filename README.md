@@ -3,6 +3,7 @@
 [![Dependencies](https://david-dm.org/diviei/yara-editor.svg)](https://david-dm.org/diviei/yara-editor)
 [![Codeship Status for Diviei/yara-editor](https://img.shields.io/codeship/5f9e0b40-8bcb-0137-6530-5e1cc316f3f0.svg)](https://app.codeship.com/projects/355186)
 [![Coverage Status](https://coveralls.io/repos/github/Diviei/yara-editor/badge.svg?branch=master)](https://coveralls.io/github/Diviei/yara-editor?branch=master)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b3245a4e-78ce-4999-b3f2-56f214a4f647/deploy-status)](https://app.netlify.com/sites/yara-editor/deploys)
 
 # \<yara-editor>
 
