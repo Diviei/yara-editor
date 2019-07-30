@@ -205,12 +205,13 @@ export default class YaraEditor extends LitElement {
     textarea.addEventListener('keydown', event => {
       // support tab on textarea
       if (event.keyCode === 9) {
+        event.preventDefault();
         // tab was pressed
-        newCaretPosition = textarea.getCaretPosition() + '    '.length;
+        newCaretPosition = textarea.getCaretPosition() + '  '.length;
         textarea.value = `${textarea.value.substring(
           0,
           textarea.getCaretPosition(),
-        )}    ${textarea.value.substring(textarea.getCaretPosition(), textarea.value.length)}`;
+        )}  ${textarea.value.substring(textarea.getCaretPosition(), textarea.value.length)}`;
         textarea.setCaretPosition(newCaretPosition);
         return false;
       }
