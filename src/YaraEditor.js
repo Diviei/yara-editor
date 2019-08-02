@@ -234,11 +234,11 @@ export default class YaraEditor extends LitElement {
       if (event.keyCode === 37) {
         // left arrow
         if (
-          textarea.value.substring(textarea.getCaretPosition() - 4, textarea.getCaretPosition()) ===
+          textarea.value.substring(textarea.getCaretPosition() - tabString.length, textarea.getCaretPosition()) ===
           tabString
         ) {
           // it's a tab space
-          newCaretPosition = textarea.getCaretPosition() - 3;
+          newCaretPosition = textarea.getCaretPosition() - (tabString.length - 1);
           textarea.setCaretPosition(newCaretPosition);
         }
         return true;
@@ -246,11 +246,11 @@ export default class YaraEditor extends LitElement {
       if (event.keyCode === 39) {
         // right arrow
         if (
-          textarea.value.substring(textarea.getCaretPosition() + 4, textarea.getCaretPosition()) ===
+          textarea.value.substring(textarea.getCaretPosition() + tabString.length, textarea.getCaretPosition()) ===
           tabString
         ) {
           // it's a tab space
-          newCaretPosition = textarea.getCaretPosition() + 3;
+          newCaretPosition = textarea.getCaretPosition() + (tabString.length - 1);
           textarea.setCaretPosition(newCaretPosition);
         }
         return true;
