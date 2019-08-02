@@ -59,15 +59,26 @@ describe('<yara-editor>', () => {
       el.textarea.dispatchEvent(event);
     });
 
+    // Tab
+    el.textarea.dispatchEvent(
+        new KeyboardEvent('keydown', { keyCode: '9' }));
+
+    el.value = '  ';
+    // Focus and set cursor to the end
+    el.textarea.focus();
+    el.textarea.setSelectionRange(2, 2);
+    el.textarea.dispatchEvent(
+      new KeyboardEvent('keydown', { keyCode: '8' }));
+
     // Special keys events
-    [
-      new KeyboardEvent('keydown', { keyCode: '9' }),
-      new KeyboardEvent('keydown', { keyCode: '8' }),
-      new KeyboardEvent('keydown', { keyCode: '37' }),
-      new KeyboardEvent('keydown', { keyCode: '39' }),
-    ].forEach(event => {
-      el.textarea.dispatchEvent(event);
-    });
+    // [
+    //   new KeyboardEvent('keydown', { keyCode: '9' }),
+    //   new KeyboardEvent('keydown', { keyCode: '8' }),
+    //   new KeyboardEvent('keydown', { keyCode: '37' }),
+    //   new KeyboardEvent('keydown', { keyCode: '39' }),
+    // ].forEach(event => {
+    //   el.textarea.dispatchEvent(event);
+    // });
   });
 
   it('textarea custom methods', async () => {
