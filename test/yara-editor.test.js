@@ -45,7 +45,7 @@ describe('<yara-editor>', () => {
     expect(el.editor.innerText).to.be.equal(el.value);
   });
 
-  it('Test keyboard events,', async () => {
+  it('Textarea events,', async () => {
     const el = await fixture(html`
       <yara-editor></yara-editor>
     `);
@@ -59,15 +59,31 @@ describe('<yara-editor>', () => {
       el.textarea.dispatchEvent(event);
     });
 
-    // Special keys events
-    [
-      new KeyboardEvent('keydown', { keyCode: '9' }),
-      new KeyboardEvent('keydown', { keyCode: '8' }),
-      new KeyboardEvent('keydown', { keyCode: '37' }),
-      new KeyboardEvent('keydown', { keyCode: '39' }),
-    ].forEach(event => {
-      el.textarea.dispatchEvent(event);
-    });
+    // Tab
+    el.textarea.dispatchEvent(
+        new KeyboardEvent('keydown', { keyCode: '9' }));
+
+    // Arrows
+    el.value = '  ';
+    // Focus and set cursor to the end
+    el.textarea.focus();
+    el.textarea.setSelectionRange(0, 0);
+    el.textarea.dispatchEvent(
+        new KeyboardEvent('keydown', { keyCode: '39' }));
+    el.textarea.setSelectionRange(2, 2);
+    el.textarea.dispatchEvent(
+        new KeyboardEvent('keydown', { keyCode: '37' }));
+
+    // Backspace
+    el.value = '  ';
+    el.textarea.focus();
+    el.textarea.setSelectionRange(2, 2);
+    el.textarea.dispatchEvent(
+        new KeyboardEvent('keydown', { keyCode: '8' }));
+
+    el.textarea.dispatchEvent(
+      new CustomEvent('scroll'));
+
   });
 
   it('textarea custom methods', async () => {

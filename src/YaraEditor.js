@@ -202,12 +202,13 @@ export default class YaraEditor extends LitElement {
   _initializeTabSupport() {
     const textarea = this.shadowRoot.querySelector('textarea');
     let newCaretPosition;
+    const tabString = '  ';
     textarea.addEventListener('keydown', event => {
       // support tab on textarea
       if (event.keyCode === 9) {
         event.preventDefault();
         // tab was pressed
-        newCaretPosition = textarea.getCaretPosition() + '  '.length;
+        newCaretPosition = textarea.getCaretPosition() + tabString.length;
         textarea.value = `${textarea.value.substring(
           0,
           textarea.getCaretPosition(),
@@ -218,13 +219,13 @@ export default class YaraEditor extends LitElement {
       if (event.keyCode === 8) {
         // backspace
         if (
-          textarea.value.substring(textarea.getCaretPosition() - 4, textarea.getCaretPosition()) ===
-          '    '
+          textarea.value.substring(textarea.getCaretPosition() - tabString.length, textarea.getCaretPosition()) ===
+          tabString
         ) {
           // it's a tab space
-          newCaretPosition = textarea.getCaretPosition() - 3;
+          newCaretPosition = textarea.getCaretPosition() - (tabString.length - 1);
           textarea.value =
-            textarea.value.substring(0, textarea.getCaretPosition() - 3) +
+            textarea.value.substring(0, textarea.getCaretPosition() - (tabString.length - 1)) +
             textarea.value.substring(textarea.getCaretPosition(), textarea.value.length);
           textarea.setCaretPosition(newCaretPosition);
         }
@@ -233,11 +234,11 @@ export default class YaraEditor extends LitElement {
       if (event.keyCode === 37) {
         // left arrow
         if (
-          textarea.value.substring(textarea.getCaretPosition() - 4, textarea.getCaretPosition()) ===
-          '    '
+          textarea.value.substring(textarea.getCaretPosition() - tabString.length, textarea.getCaretPosition()) ===
+          tabString
         ) {
           // it's a tab space
-          newCaretPosition = textarea.getCaretPosition() - 3;
+          newCaretPosition = textarea.getCaretPosition() - (tabString.length - 1);
           textarea.setCaretPosition(newCaretPosition);
         }
         return true;
@@ -245,11 +246,11 @@ export default class YaraEditor extends LitElement {
       if (event.keyCode === 39) {
         // right arrow
         if (
-          textarea.value.substring(textarea.getCaretPosition() + 4, textarea.getCaretPosition()) ===
-          '    '
+          textarea.value.substring(textarea.getCaretPosition() + tabString.length, textarea.getCaretPosition()) ===
+          tabString
         ) {
           // it's a tab space
-          newCaretPosition = textarea.getCaretPosition() + 3;
+          newCaretPosition = textarea.getCaretPosition() + (tabString.length - 1);
           textarea.setCaretPosition(newCaretPosition);
         }
         return true;
