@@ -142,6 +142,18 @@ export default class YaraEditor extends LitElement {
     this.setAttribute('value', newValue);
   }
 
+  get readonly() {
+    return !!this.getAttribute('readonly') || false;
+  }
+
+  set readonly(newValue) {
+    if (newValue) {
+      this.setAttribute('readonly', 1);
+    } else {
+      this.removeAttribute('readonly');
+    }
+  }
+
   attributeChangedCallback(name, oldVal, newVal) {
     if (name === 'value' && oldVal !== newVal && this.textarea && this.editor) {
       this.textarea.value = newVal;

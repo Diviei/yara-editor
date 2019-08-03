@@ -83,7 +83,16 @@ describe('<yara-editor>', () => {
 
     el.textarea.dispatchEvent(
       new CustomEvent('scroll'));
+  });
 
+  it('textarea readonly', async () => {
+    const testValue = 'test';
+    const el = await fixture(html`
+      <yara-editor value="${testValue}" readonly="1"></yara-editor>
+    `);
+
+    expect(el.readonly).to.be.true;
+    expect(el.textarea.readOnly).to.be.true;
   });
 
   it('textarea custom methods', async () => {
