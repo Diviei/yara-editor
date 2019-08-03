@@ -88,11 +88,16 @@ describe('<yara-editor>', () => {
   it('textarea readonly', async () => {
     const testValue = 'test';
     const el = await fixture(html`
-      <yara-editor value="${testValue}" readonly="1"></yara-editor>
+      <yara-editor value="${testValue}"></yara-editor>
     `);
 
+    el.readonly = true;
     expect(el.readonly).to.be.true;
     expect(el.textarea.readOnly).to.be.true;
+
+    el.readonly = false;
+    expect(el.readonly).to.be.false;
+    expect(el.textarea.readOnly).to.be.false;
   });
 
   it('textarea custom methods', async () => {

@@ -103,6 +103,10 @@ export default class YaraEditor extends LitElement {
 
   static get properties() {
     return {
+      readonly: {
+        type: Boolean,
+      },
+
       value: {
         type: String,
       },
