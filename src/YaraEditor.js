@@ -103,6 +103,10 @@ export default class YaraEditor extends LitElement {
 
   static get properties() {
     return {
+      readonly: {
+        type: Boolean,
+      },
+
       value: {
         type: String,
       },
@@ -140,6 +144,18 @@ export default class YaraEditor extends LitElement {
 
   set value(newValue) {
     this.setAttribute('value', newValue);
+  }
+
+  get readonly() {
+    return !!this.getAttribute('readonly') || false;
+  }
+
+  set readonly(newValue) {
+    if (newValue) {
+      this.setAttribute('readonly', 1);
+    } else {
+      this.removeAttribute('readonly');
+    }
   }
 
   attributeChangedCallback(name, oldVal, newVal) {

@@ -84,6 +84,30 @@ describe('<yara-editor>', () => {
     el.textarea.dispatchEvent(
       new CustomEvent('scroll'));
 
+    // Coverage branches
+    el.value = '';
+    el.textarea.focus();
+    el.textarea.dispatchEvent(
+      new KeyboardEvent('keydown', { keyCode: '39' }));
+    el.textarea.dispatchEvent(
+      new KeyboardEvent('keydown', { keyCode: '37' }));
+    el.textarea.dispatchEvent(
+      new KeyboardEvent('keydown', { keyCode: '8' }));
+  });
+
+  it('textarea readonly', async () => {
+    const testValue = 'test';
+    const el = await fixture(html`
+      <yara-editor value="${testValue}"></yara-editor>
+    `);
+
+    el.readonly = true;
+    expect(el.readonly).to.be.true;
+    expect(el.textarea.readOnly).to.be.true;
+
+    el.readonly = false;
+    expect(el.readonly).to.be.false;
+    expect(el.textarea.readOnly).to.be.false;
   });
 
   it('textarea custom methods', async () => {
