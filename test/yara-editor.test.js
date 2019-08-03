@@ -83,6 +83,16 @@ describe('<yara-editor>', () => {
 
     el.textarea.dispatchEvent(
       new CustomEvent('scroll'));
+
+    // Coverage branches
+    el.value = '';
+    el.textarea.focus();
+    el.textarea.dispatchEvent(
+      new KeyboardEvent('keydown', { keyCode: '39' }));
+    el.textarea.dispatchEvent(
+      new KeyboardEvent('keydown', { keyCode: '37' }));
+    el.textarea.dispatchEvent(
+      new KeyboardEvent('keydown', { keyCode: '8' }));
   });
 
   it('textarea readonly', async () => {
