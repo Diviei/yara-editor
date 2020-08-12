@@ -4,6 +4,8 @@ export const keywords = [
   'any',
   'ascii',
   'at',
+  'base64',
+  'base64wide',
   'condition',
   'contains',
   'entrypoint',
@@ -39,4 +41,5 @@ export const keywords = [
   'uint16be',
   'uint32be',
   'wide',
+  'xor',
 ];
